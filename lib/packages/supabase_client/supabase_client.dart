@@ -12,26 +12,21 @@ class DatabaseClient {
     required String username,
     required String password,
   }) async {
+    final supabaseClient = SupabaseClient(url, key);
+
+    final resUsers = await supabaseClient.from('user_admin').select('username')
+        as List<dynamic>;
+    final allUsernames =
+        resUsers.map((ele) => (ele as Map<String, dynamic>)['username']);
+    if (allUsernames.contains(username)) {
+      throw Exception('This username has been used!');
+    }
+
     try {
-      final supabaseClient = SupabaseClient(url, key);
-      final resUsers = await supabaseClient
-          .from('user_admin')
-          .select('username') as List<dynamic>;
-
-      final allUsernames =
-          resUsers.map((ele) => (ele as Map<String, dynamic>)['username']);
-
-      try {
-        if (allUsernames.contains(username)) {
-          throw Exception('This username has been used!');
-        }
-        await supabaseClient.from('user_admin').insert({
-          'username': username,
-          'password': password,
-        });
-      } catch (e) {
-        rethrow;
-      }
+      await supabaseClient.from('user_admin').insert({
+        'username': username,
+        'password': password,
+      });
     } catch (e) {
       log(e.toString());
       throw Exception('Something has been wrong!');
