@@ -32,7 +32,7 @@ class SignupView extends StatelessWidget {
               ..hideCurrentSnackBar()
               ..showSnackBar(
                 TSnackbar.success(context,
-                    content: 'Domain has created successfully!'),
+                    content: 'Account has been created successfully!'),
               );
             Navigator.of(context)
                 .pushAndRemoveUntil(LoginPage.route(), (route) => false);

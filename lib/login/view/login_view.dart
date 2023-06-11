@@ -128,7 +128,7 @@ class _LinkText extends StatelessWidget {
           ),
           children: [
             const TextSpan(
-              text: "Don't have an domain? ",
+              text: "Don't have an account? ",
             ),
             WidgetSpan(
               baseline: TextBaseline.alphabetic,
